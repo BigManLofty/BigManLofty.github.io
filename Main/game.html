@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stick Figure Fighting Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #222; color: #fff; text-align: center; }
+        #gameCanvas { background: #fff; display: block; margin: 20px auto; border: 2px solid #444; }
+        .controls { margin: 20px; }
+        .char-btn { margin: 0 10px; padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Stick Figure Fighting Game</h1>
+    <div class="controls">
+        <button class="char-btn" onclick="switchCharacter()">Switch Character</button>
+        <span id="charName"></span>
+    </div>
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+    <p>Use arrow keys to move. Press <b>Space</b> to use your power!</p>
+    <a href="index.html" style="color: #0af;">Back to Home</a>
+    <script>
+        // Character definitions
+        const characters = [
+            {
+                name: 'Soldier',
+                color: '#2e86de',
+                power: 'Rapid Fire',
+                powerAction: function(player) { player.rapidFire = 20; },
+                drawPower: function(ctx, player) {
+                    if (player.rapidFire > 0) {
+                        ctx.fillStyle = '#2e86de';
+                        ctx.fillRect(player.x + 30, player.y - 10, 20, 5);
+                    }
+                }
+            },
+            {
+                name: 'Doctor',
+                color: '#27ae60',
+                power: 'Heal',
+                powerAction: function(player) { player.hp = Math.min(player.hp + 20, 100); },
+                drawPower: function(ctx, player) {
+                    ctx.fillStyle = '#27ae60';
+                    ctx.beginPath();
+                    ctx.arc(player.x, player.y - 40, 10, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+            },
+            {
+                name: 'Orphan Caretaker',
+                color: '#e67e22',
+                power: 'Frenzy',
+                powerAction: function(player) { player.frenzy = 60; },
+                drawPower: function(ctx, player) {
+                    if (player.frenzy > 0) {
+                        ctx.strokeStyle = '#e67e22';
+                        ctx.beginPath();
+                        ctx.arc(player.x, player.y, 30, 0, 2 * Math.PI);
+                        ctx.stroke();
+                    }
+                }
+            }
+        ];
+
+        let currentChar = 0;
+        let player = { x: 100, y: 300, hp: 100, rapidFire: 0, frenzy: 0 };
+        let enemy = { x: 500, y: 300, hp: 100 };
+        let keys = {};
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        document.getElementById('charName').textContent = characters[currentChar].name + ' (' + characters[currentChar].power + ')';
+
+        function switchCharacter() {
+            currentChar = (currentChar + 1) % characters.length;
+            document.getElementById('charName').textContent = characters[currentChar].name + ' (' + characters[currentChar].power + ')';
+        }
+
+        document.addEventListener('keydown', e => { keys[e.key] = true; });
+        document.addEventListener('keyup', e => { keys[e.key] = false; });
+
+        document.addEventListener('keydown', e => {
+            if (e.code === 'Space') {
+                characters[currentChar].powerAction(player);
+            }
+        });
+
+        function update() {
+            // Movement
+            if (keys['ArrowLeft']) player.x -= 3;
+            if (keys['ArrowRight']) player.x += 3;
+            if (keys['ArrowUp']) player.y -= 3;
+            if (keys['ArrowDown']) player.y += 3;
+            // Clamp
+            player.x = Math.max(30, Math.min(canvas.width - 30, player.x));
+            player.y = Math.max(60, Math.min(canvas.height - 10, player.y));
+            // Power timers
+            if (player.rapidFire > 0) player.rapidFire--;
+            if (player.frenzy > 0) player.frenzy--;
+        }
+
+        function drawStickFigure(ctx, x, y, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            // Head
+            ctx.beginPath();
+            ctx.arc(x, y - 20, 15, 0, 2 * Math.PI);
+            ctx.stroke();
+            // Body
+            ctx.beginPath();
+            ctx.moveTo(x, y - 5);
+            ctx.lineTo(x, y + 30);
+            ctx.stroke();
+            // Arms
+            ctx.beginPath();
+            ctx.moveTo(x - 20, y + 5);
+            ctx.lineTo(x + 20, y + 5);
+            ctx.stroke();
+            // Legs
+            ctx.beginPath();
+            ctx.moveTo(x, y + 30);
+            ctx.lineTo(x - 15, y + 55);
+            ctx.moveTo(x, y + 30);
+            ctx.lineTo(x + 15, y + 55);
+            ctx.stroke();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Player
+            drawStickFigure(ctx, player.x, player.y, characters[currentChar].color);
+            // Power effect
+            characters[currentChar].drawPower(ctx, player);
+            // Enemy
+            drawStickFigure(ctx, enemy.x, enemy.y, '#c0392b');
+            // HP bars
+            ctx.fillStyle = '#2ecc40';
+            ctx.fillRect(player.x - 30, player.y - 50, player.hp * 0.6, 8);
+            ctx.fillStyle = '#ff4136';
+            ctx.fillRect(enemy.x - 30, enemy.y - 50, enemy.hp * 0.6, 8);
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+    </script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirk Veynar</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #181818 0%, #2a0a0a 100%);
+      color: #f2f2f2;
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      background: rgba(20, 20, 20, 0.97);
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #000a, 0 0 0 4px #2d2d2d;
+      padding: 38px 34px 34px 34px;
+      border: 2px solid #a00;
+      position: relative;
+      overflow: hidden;
+    }
+    h1 {
+      font-family: 'Roboto', Arial, sans-serif;
+      color: #d7263d;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+      margin-bottom: 0.2em;
+      text-shadow: 0 2px 12px #a00a, 0 0 2px #fff2;
+    }
+    .subtitle {
+      color: #baffc9;
+      font-size: 1.2em;
+      margin-bottom: 1.5em;
+      font-family: 'Roboto', Arial, sans-serif;
+      letter-spacing: 1px;
+    }
+    .fractured-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png'), linear-gradient(120deg, #0008 0%, #2a0a0a 100%);
+      opacity: 0.18;
+      mix-blend-mode: lighten;
+    }
+    .core-basics, .timeline, .personality, .haunted, .section {
+      margin-bottom: 2.2em;
+      position: relative;
+      z-index: 1;
+    }
+    .section-title {
+      color: #ffd700;
+      font-size: 1.3em;
+      font-family: 'UnifrakturCook', serif;
+      margin-bottom: 0.5em;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #d7263d44;
+    }
+    .basic-info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0 0.5em;
+      font-size: 1.08em;
+    }
+    .basic-info-list li { margin-bottom: 0.3em; }
+    .timeline {
+      border-left: 3px solid #d7263d;
+      padding-left: 1.5em;
+      margin-left: 0.5em;
+    }
+    .timeline-event {
+      margin-bottom: 1.5em;
+      position: relative;
+      transition: filter 0.2s;
+    }
+    .timeline-event:before {
+      content: '';
+      position: absolute;
+      left: -1.7em;
+      top: 0.3em;
+      width: 1em;
+      height: 1em;
+      background: #baffc9;
+      border-radius: 50%;
+      border: 2px solid #d7263d;
+      box-shadow: 0 0 8px #ffd70099;
+    }
+    .event-title {
+      color: #d7263d;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: 0.2em;
+    }
+    .event-desc {
+      color: #f2f2f2;
+      font-size: 1em;
+      margin-bottom: 0.1em;
+    }
+    .manifestation {
+      color: #baffc9;
+      font-size: 0.98em;
+      margin-top: 0.2em;
+      font-style: italic;
+    }
+    .haunted {
+      background: linear-gradient(90deg, #222 0%, #2a0a0a 100%);
+      border: 1.5px solid #ffd700;
+      border-radius: 10px;
+      padding: 18px 20px;
+      color: #ffd700;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 1.13em;
+      margin-top: 1.5em;
+      margin-bottom: 2em;
+      text-align: center;
+      box-shadow: 0 0 16px #d7263d44;
+      transition: color 0.2s, text-shadow 0.2s;
+      cursor: pointer;
+    }
+    .haunted.flicker {
+      color: #ffb300;
+      text-shadow: 0 0 8px #ffd700, 0 0 18px #d7263d, 0 0 2px #fff;
+      animation: flicker 0.7s infinite alternate;
+    }
+    .prophecy {
+      background: linear-gradient(90deg, #222 0%, #2a0a0a 100%);
+      border: 1.5px solid #ffd700;
+      border-radius: 10px;
+      padding: 18px 20px;
+      color: #ffd700;
+      font-family: 'UnifrakturCook', serif;
+      font-size: 1.13em;
+      margin-top: 1.5em;
+      margin-bottom: 2em;
+      text-align: center;
+      box-shadow: 0 0 16px #d7263d44;
+      transition: color 0.2s, text-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      40% { opacity: 0.85; }
+      60% { opacity: 1; }
+      100% { opacity: 0.92; }
+    }
+    .shard {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.22;
+      filter: blur(0.5px);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #d7263d; }
+    /* Glitch effect for timeline */
+    .timeline-event.glitch {
+      position: relative;
+      color: #fff;
+      animation: glitch 1.2s infinite linear alternate-reverse;
+    }
+    .glitch.unreadable {
+      filter: blur(4px) brightness(0.7) contrast(2);
+      text-shadow: 0 0 8px #000, 0 0 16px #d7263d, 0 0 2px #fff;
+      user-select: none;
+      pointer-events: none;
+    }
+    .timeline-event.unreadable {
+      filter: blur(4px) brightness(0.7) contrast(2);
+      text-shadow: 0 0 8px #000, 0 0 16px #d7263d, 0 0 2px #fff;
+      user-select: none;
+      pointer-events: none;
+    }
+    .password-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(20,20,20,0.98);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .password-box {
+      background: #222;
+      border: 2px solid #ffd700;
+      border-radius: 12px;
+      box-shadow: 0 0 24px #d7263d88;
+      padding: 36px 32px 28px 32px;
+      text-align: center;
+      color: #ffd700;
+      font-family: 'Roboto', Arial, sans-serif;
+      min-width: 320px;
+    }
+    .password-box input[type="password"] {
+      font-size: 1.2em;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1.5px solid #ffd700;
+      margin-top: 12px;
+      margin-bottom: 18px;
+      background: #181818;
+      color: #ffd700;
+      outline: none;
+    }
+    .password-box button {
+      font-size: 1.1em;
+      padding: 7px 22px;
+      border-radius: 6px;
+      border: none;
+      background: #d7263d;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .password-box button:hover {
+      background: #ffd700;
+      color: #d7263d;
+    }
+    .password-error {
+      color: #d7263d;
+      margin-top: 10px;
+      font-size: 1em;
+      min-height: 1.2em;
+    }
+    .glitch.timeline-part {
+      animation: glitch 1.2s infinite linear alternate-reverse;
+      transition: filter 0.2s;
+    }
+    .glitch.timeline-part.glitch-paused {
+      animation-play-state: paused !important;
+      filter: none !important;
+      text-shadow: none !important;
+      color: #fff !important;
+    }
+    .hidden-mr-pitch { display: none !important; }
+  </style>
+</head>
+<body>
+    <div class="password-overlay" id="passwordOverlay">
+      <div class="password-box">
+        <div style="font-size:1.5em;font-weight:bold;margin-bottom:10px;">Enter Password</div>
+        <input type="password" id="passwordInput" placeholder="Password">
+        <br>
+        <button onclick="checkPassword()">Submit</button>
+        <div class="password-error" id="passwordError"></div>
+      </div>
+    </div>
+    <div class="container">
+    <div class="fractured-bg"></div>
+    <h1>Kirk Veynar</h1>
+    <div class="subtitle">The Haunted Vessel of Seranova</div>
+    <img class="art" src="./Assets/KirkStorm.jpg" alt="Dr  - DND Character" style="box-shadow:0 0 32px #d7263d88, 0 0 8px #ffd700; border:3px solid #ffd700; margin-bottom:2em;">
+    <div class="core-basics">
+      <div class="section-title">Basic Info</div>
+      <ul class="basic-info-list">
+        <li><b>Name:</b> Kirk Veynar</li>
+        <li><b>Race:</b> Human</li>
+        <li><b>Disorder/Condition:</b> Splintered psyche – relives distinct ages of his life, each with its own personality, strengths, and flaws.</li>
+        <li><b>Current State:</b> Haunted by Seranova, the god of insanity and fear.</li>
+        <li><b>Class/Role:</b> Shapeshifter of fears — manifests different forms of terror in combat (darkness, slaughter, corruption, burial, etc.).</li>
+      </ul>
+    </div>
+    <div class="timeline">
+      <div class="section-title">Timeline of Life & Split Personalities</div>
+      <div class="timeline-event">
+        <div class="event-title"><span class="glitch timeline-part">Age 22 – The Soldier of Skyvard</span></div>
+        <div class="event-desc"><span class="glitch timeline-part">Ambitious, vigorous, cruel, ruthless. Master of combat and leadership, but merciless in pursuit of victory.</span></div>
+        <div class="manifestation"><span class="glitch timeline-part">Manifestation of Seranova: Captain Clay – a relentless, bloodthirsty commander.</span></div>
+        <div style="display:flex;justify-content:center;align-items:flex-end;gap:24px;margin:12px 0 0 0;">
+          <img src="./Assets/Soilder Kirk.jpg" alt="Soldier Kirk" style="display:block;width:270px;height:270px;object-fit:contain;border-radius:8px;border:2px solid #ffd700;box-shadow:0 0 12px #d7263d88;background:#222;">
+          <img src="./Assets/Captin Clay.jpg" alt="Captain Clay" style="display:block;width:270px;height:270px;object-fit:contain;border-radius:8px;border:2px solid #ffd700;box-shadow:0 0 12px #d7263d88;background:#222;">
+        </div>
+      </div>
+      <div class="timeline-event">
+        <div class="event-title"><span class="glitch timeline-part">Age 24 – The Nurse</span></div>
+        <div class="event-desc"><span class="glitch timeline-part">Kind, patient, observant, but haunted by endless suffering. Empathetic healer, but spirit dimmed by despair.</span></div>
+        <div class="manifestation"><span class="glitch timeline-part">Manifestation of Seranova: Dr. Therovin Whole – a cold, philosophical physician.</span></div>
+        <div style="display:flex;justify-content:center;gap:16px;margin-top:12px;">
+          <img src="./Assets/Dr. Kirk.jpg" alt="Dr. Kirk" style="max-width:150px;border-radius:8px;border:2px solid #ffd700;box-shadow:0 0 12px #d7263d88;">
+          <img src="./Assets/Dr. Therovin Whole.png" alt="Dr. Therovin Whole" style="max-width:150px;border-radius:8px;border:2px solid #ffd700;box-shadow:0 0 12px #d7263d88;">
+        </div>
+      </div>
+      <div class="timeline-event">
+        <div class="event-title"><span class="glitch timeline-part">Age 25 – The Merchant</span></div>
+        <div class="event-desc"><span class="glitch timeline-part">Practical, focused, cautious. Driven to provide for his family, but obsessed with security and fearful of loss.</span></div>
+        <div class="manifestation"><span class="glitch timeline-part">Manifestation of Seranova: Mr. Pitch – a slick, smiling trader hiding daggers behind every deal.</span></div>
+      </div>
+      <div class="timeline-event">
+        <div class="event-title"><span class="glitch timeline-part">Age 26 – The Orphanage Headmaster</span></div>
+        <div style="display:flex;justify-content:center;align-items:flex-end;gap:24px;margin:12px 0 0 0;">
+          <img src="./Assets/Orphan Master.jpg" alt="Orphan Master Kirk" style="display:block;width:230px;height:230px;object-fit:cover;border-radius:8px;border:2px solid #ffd700;box-shadow:0 0 12px #d7263d88;">
+          <img id="mrPitchImg" src="./Assets/Mr. Pitch.png" alt="Mr. Pitch - Orphan Master" style="display:block;width:230px;height:230px;object-fit:cover;border-radius:8px;border:2px solid #ffd700;box-shadow:0 0 12px #d7263d88;">
+        </div>
+        <div class="event-desc"><span class="glitch timeline-part">Stern, intelligent, paternal, but deeply unstable. Authority and strategy, but fractured sanity and violent outbursts.</span></div>
+        <div class="manifestation"><span class="glitch timeline-part">Event: Driven by madness, he maims the children under his care before relapsing into the soldier persona and fleeing. Seranova appears in multiple forms, tormenting him with fragments of all his failures.</span></div>
+    
+      </div>
+    </div>
+    <div class="prophecy" id="prophecyBox" style="background:linear-gradient(90deg,#222 0%,#2a0a0a 100%);border:1.5px solid #ffd700;border-radius:10px;padding:18px 20px;color:#ffd700;font-family:'UnifrakturCook',serif;font-size:1.13em;margin-top:1.5em;margin-bottom:2em;text-align:center;box-shadow:0 0 16px #d7263d44;transition:color 0.2s,text-shadow 0.2s;cursor:pointer;">
+      <div style="font-family:'Roboto',Arial,sans-serif;font-size:2em;font-weight:bold;letter-spacing:2px;color:#ffd700;margin-bottom:0.3em;">PROPHECY</div>
+      “The chained phantom walks with death’s child. Soil shall drink his body, sea shall claim his breath. To walk unburied is to carry the child’s shadow until the earth itself remembers.”
+    </div>
+    <div class="haunted" id="hauntedBox">
+      <b>Current State – The Haunted Vessel</b><br>
+      Now shifting uncontrollably between these personalities, Kirk fights by embodying fear itself. He manifests avatars of primal dread:<br><br>
+      <ul class="basic-info-list" style="margin:0 0 0 1.2em;text-align:left;max-width:420px;display:inline-block;">
+        <li><b>The Watcher</b> – Paranoia and unseen presence.</li>
+        <li><b>The Buried</b> – Suffocation, earth’s crushing embrace.</li>
+        <li><b>The Corruption</b> – Rot, plague, and slow decay.</li>
+        <li><b>The Dark</b> – Blindness, shadows, and despair.</li>
+        <li><b>The Desolation</b> – Fury and devastation.</li>
+        <li><b>The End</b> – Inevitability of death.</li>
+        <li><b>The Flesh</b> – Body horror, abomination of self.</li>
+        <li><b>The Hunt</b> – Predator instincts and relentless pursuit.</li>
+        <li><b>The Lonely</b> – Isolation and silence.</li>
+        <li><b>The Slaughter</b> – Frenzied, mindless violence.</li>
+        <li><b>The Spiral</b> – Madness and illusions.</li>
+        <li><b>The Stranger</b> – Mimicry, distrust, uncanny doubles.</li>
+        <li><b>The Vast</b> – Fear of emptiness, the abyss.</li>
+        <li><b>The Web</b> – Entrapment, puppetry, being controlled.</li>
+      </ul>
+    </div>
+    <div class="personality">
+      <div class="section-title">Personality Core</div>
+      <ul class="basic-info-list">
+        <li><b>Drives:</b> Haunted by guilt, survival instinct, manipulation by Seranova.</li>
+        <li><b>Tragedy:</b> Each identity shows who he could have been, but Seranova twists every life path into ruin.</li>
+        <li><b>Behavior:</b> Shifts unpredictably between warmth, cruelty, and madness.</li>
+        <li><b>Signature Trait:</b> In combat, his form shifts to reflect the fear he wants his enemy to feel.</li>
+      </ul>
+    </div>
+    <div class="section family-section" style="margin-bottom:2.2em;">
+      <div class="section-title">Family</div>
+      <ul class="basic-info-list">
+        <li><b>Wife:</b> Claire</li>
+        <li><b>Son:</b> Daren</li>
+      </ul>
+      <div style="margin-top:1.1em;">
+        <ul style="list-style:none;padding:0;margin:0 0 0 0.5em;">
+          <li class="glitch" style="font-size:1.13em;">Claire</li>
+          <li class="glitch" style="font-size:1.13em;">Daren</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Kaelen Ashwhisper</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Thorn Blackvale</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Lyra Duskborn</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Corin Hollowstride</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Mirael Frostroot</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Tavin Emberlost</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Eira Nightbloom</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Darik Crowthane</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Selene Starhollow</li>
+          <li class="glitch unreadable" style="font-size:1.13em;">Roran Ironvale</li>
+        </ul>
+      </div>
+    </div>
+    <a class="back-link" href="home.html">&#8592; Back to Home</a>
+  </div>
+  <script>
+    // Password protection logic
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const overlay = document.getElementById('passwordOverlay');
+      const error = document.getElementById('passwordError');
+      const mrPitchImg = document.getElementById('mrPitchImg');
+      if (input === '1111') {
+        overlay.style.display = 'none';
+        if (mrPitchImg) mrPitchImg.classList.remove('hidden-mr-pitch');
+      } else {
+        error.textContent = 'Incorrect password. Some secrets remain hidden...';
+        // Blur Merchant and Orphanage Headmaster timeline events
+        const timelineEvents = document.querySelectorAll('.timeline-event');
+        if (timelineEvents[2]) timelineEvents[2].classList.add('unreadable');
+        if (timelineEvents[3]) timelineEvents[3].classList.add('unreadable');
+        // Hide specific Forms of Fear
+        const fearList = document.querySelectorAll('.haunted ul.basic-info-list li');
+        fearList.forEach(li => {
+          const txt = li.textContent || '';
+          if (
+            txt.includes('The Watcher') ||
+            txt.includes('The Buried') ||
+            txt.includes('The Corruption') ||
+            txt.includes('The Lonely') ||
+            txt.includes('The Slaughter') ||
+            txt.includes('The Spiral') ||
+            txt.includes('The Stranger') ||
+            txt.includes('The Vast') ||
+            txt.includes('The Web')
+          ) {
+            li.style.display = 'none';
+          } else {
+            li.style.display = '';
+            li.classList.remove('unreadable');
+          }
+        });
+        if (mrPitchImg) mrPitchImg.classList.add('hidden-mr-pitch');
+        overlay.style.display = 'none';
+      }
+    }
+    // Allow Enter key to submit password
+    document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+    // Flicker effect for haunted state
+    const haunted = document.getElementById('hauntedBox');
+    haunted.addEventListener('mouseenter', () => haunted.classList.add('flicker'));
+    haunted.addEventListener('mouseleave', () => haunted.classList.remove('flicker'));
+    // Glitch effect on scroll
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.glitch').forEach(el => {
+        if (!el.classList.contains('glitch-paused')) {
+          if (Math.random() > 0.7) {
+            el.style.filter = 'blur(1.5px)';
+          } else {
+            el.style.filter = '';
+          }
+        } else {
+          el.style.textShadow = 'none';
+          el.style.color = '#fff';
+        }
+      });
+    });
+    // Pause glitch on hover for each timeline event
+    document.querySelectorAll('.timeline-event.glitch').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        el.classList.add('glitch-paused');
+        el.style.filter = '';
+        el.style.textShadow = 'none';
+        el.style.color = '#fff';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.classList.remove('glitch-paused');
+        el.style.textShadow = '';
+        el.style.color = '';
+      });
+    });
+    // Pause glitch on hover for each timeline part
+    document.querySelectorAll('.glitch.timeline-part').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        el.classList.add('glitch-paused');
+        el.style.filter = '';
+        el.style.textShadow = 'none';
+        el.style.color = '#fff';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.classList.remove('glitch-paused');
+        el.style.textShadow = '';
+        el.style.color = '';
+      });
+    });
+    // Broken glass shards overlay
+    for (let i = 0; i < 7; i++) {
+      const shard = document.createElement('img');
+      shard.src = 'https://pngimg.com/uploads/shards/shards_PNG36.png';
+      shard.className = 'shard';
+      shard.style.top = Math.random()*80 + '%';
+      shard.style.left = Math.random()*90 + '%';
+      shard.style.width = (60 + Math.random()*80) + 'px';
+      shard.style.transform = `rotate(${Math.random()*360}deg)`;
+      document.querySelector('.container').appendChild(shard);
+    }
+  </script>
+</body>
+</html>
