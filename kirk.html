@@ -264,6 +264,7 @@
       color: #fff !important;
     }
     .hidden-mr-pitch { display: none !important; }
+    .blurred { filter: blur(4px); }
   </style>
 </head>
 <body>
@@ -366,13 +367,13 @@
     <div class="section family-section" style="margin-bottom:2.2em;">
       <div class="section-title">Family</div>
       <ul class="basic-info-list">
-        <li><b>Wife:</b> Claire</li>
-        <li><b>Son:</b> Daren</li>
+        <li><span class="blurred">Claire</span></li>
+        <li><span class="blurred">Daren</span></li>
       </ul>
       <div style="margin-top:1.1em;">
         <ul style="list-style:none;padding:0;margin:0 0 0 0.5em;">
-          <li class="glitch" style="font-size:1.13em;">Claire</li>
-          <li class="glitch" style="font-size:1.13em;">Daren</li>
+          <li class="glitch" style="font-size:1.13em;"><span class="blurred">Claire</span></li>
+          <li class="glitch" style="font-size:1.13em;"><span class="blurred">Daren</span></li>
           <li class="glitch unreadable" style="font-size:1.13em;">Kaelen Ashwhisper</li>
           <li class="glitch unreadable" style="font-size:1.13em;">Thorn Blackvale</li>
           <li class="glitch unreadable" style="font-size:1.13em;">Lyra Duskborn</li>
@@ -400,6 +401,9 @@
           if (formsLink) formsLink.style.display = 'inline-block';
           const mrPitchImg = document.getElementById('mrPitchImg');
           if (mrPitchImg) mrPitchImg.classList.remove('hidden-mr-pitch');
+          // unblur family names when bypassing auth
+          document.querySelectorAll('.family-section .blurred').forEach(el => el.classList.remove('blurred'));
+          document.querySelectorAll('.family-section .unreadable').forEach(el => el.classList.remove('unreadable'));
         }
       } catch (e) {
         // silent fail
@@ -417,6 +421,9 @@
         // reveal the hidden Forms of Fear link
         const formsLink = document.getElementById('formsLink');
         if (formsLink) formsLink.style.display = 'inline-block';
+        // unblur family names when password is correct
+        document.querySelectorAll('.family-section .blurred').forEach(el => el.classList.remove('blurred'));
+        document.querySelectorAll('.family-section .unreadable').forEach(el => el.classList.remove('unreadable'));
       } else {
         error.textContent = 'Incorrect password. Some secrets remain hidden...';
         // Blur Merchant and Orphanage Headmaster timeline events
