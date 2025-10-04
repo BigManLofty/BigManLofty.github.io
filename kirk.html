@@ -187,58 +187,7 @@
       user-select: none;
       pointer-events: none;
     }
-    .password-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(20,20,20,0.98);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .password-box {
-      background: #222;
-      border: 2px solid #ffd700;
-      border-radius: 12px;
-      box-shadow: 0 0 24px #d7263d88;
-      padding: 36px 32px 28px 32px;
-      text-align: center;
-      color: #ffd700;
-      font-family: 'Roboto', Arial, sans-serif;
-      min-width: 320px;
-    }
-    .password-box input[type="password"] {
-      font-size: 1.2em;
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: 1.5px solid #ffd700;
-      margin-top: 12px;
-      margin-bottom: 18px;
-      background: #181818;
-      color: #ffd700;
-      outline: none;
-    }
-    .password-box button {
-      font-size: 1.1em;
-      padding: 7px 22px;
-      border-radius: 6px;
-      border: none;
-      background: #d7263d;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .password-box button:hover {
-      background: #ffd700;
-      color: #d7263d;
-    }
-    .password-error {
-      color: #d7263d;
-      margin-top: 10px;
-      font-size: 1em;
-      min-height: 1.2em;
-    }
+
     .glitch.timeline-part {
       animation: glitch 1.2s infinite linear alternate-reverse;
       transition: filter 0.2s;
@@ -249,19 +198,11 @@
       text-shadow: none !important;
       color: #fff !important;
     }
-    .hidden-mr-pitch { display: none !important; }
+
   </style>
 </head>
 <body>
-    <div class="password-overlay" id="passwordOverlay">
-      <div class="password-box">
-        <div style="font-size:1.5em;font-weight:bold;margin-bottom:10px;">Enter Password</div>
-        <input type="password" id="passwordInput" placeholder="Password">
-        <br>
-        <button onclick="checkPassword()">Submit</button>
-        <div class="password-error" id="passwordError"></div>
-      </div>
-    </div>
+
     <div class="container">
     <div class="fractured-bg"></div>
     <h1>Kirk Veynar</h1>
@@ -356,66 +297,22 @@
         <ul style="list-style:none;padding:0;margin:0 0 0 0.5em;">
           <li class="glitch" style="font-size:1.13em;">Claire</li>
           <li class="glitch" style="font-size:1.13em;">Daren</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Kaelen Ashwhisper</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Thorn Blackvale</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Lyra Duskborn</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Corin Hollowstride</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Mirael Frostroot</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Tavin Emberlost</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Eira Nightbloom</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Darik Crowthane</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Selene Starhollow</li>
-          <li class="glitch unreadable" style="font-size:1.13em;">Roran Ironvale</li>
+          <li class="glitch" style="font-size:1.13em;">Kaelen Ashwhisper</li>
+          <li class="glitch" style="font-size:1.13em;">Thorn Blackvale</li>
+          <li class="glitch" style="font-size:1.13em;">Lyra Duskborn</li>
+          <li class="glitch" style="font-size:1.13em;">Corin Hollowstride</li>
+          <li class="glitch" style="font-size:1.13em;">Mirael Frostroot</li>
+          <li class="glitch" style="font-size:1.13em;">Tavin Emberlost</li>
+          <li class="glitch" style="font-size:1.13em;">Eira Nightbloom</li>
+          <li class="glitch" style="font-size:1.13em;">Darik Crowthane</li>
+          <li class="glitch" style="font-size:1.13em;">Selene Starhollow</li>
+          <li class="glitch" style="font-size:1.13em;">Roran Ironvale</li>
         </ul>
       </div>
     </div>
     <a class="back-link" href="index.html">&#8592; Back to Home</a>
   </div>
   <script>
-    // Password protection logic
-    function checkPassword() {
-      const input = document.getElementById('passwordInput').value;
-      const overlay = document.getElementById('passwordOverlay');
-      const error = document.getElementById('passwordError');
-      const mrPitchImg = document.getElementById('mrPitchImg');
-      if (input === '1111') {
-        overlay.style.display = 'none';
-        if (mrPitchImg) mrPitchImg.classList.remove('hidden-mr-pitch');
-      } else {
-        error.textContent = 'Incorrect password. Some secrets remain hidden...';
-        // Blur Merchant and Orphanage Headmaster timeline events
-        const timelineEvents = document.querySelectorAll('.timeline-event');
-        if (timelineEvents[2]) timelineEvents[2].classList.add('unreadable');
-        if (timelineEvents[3]) timelineEvents[3].classList.add('unreadable');
-        // Hide specific Forms of Fear
-        const fearList = document.querySelectorAll('.haunted ul.basic-info-list li');
-        fearList.forEach(li => {
-          const txt = li.textContent || '';
-          if (
-            txt.includes('The Watcher') ||
-            txt.includes('The Buried') ||
-            txt.includes('The Corruption') ||
-            txt.includes('The Lonely') ||
-            txt.includes('The Slaughter') ||
-            txt.includes('The Spiral') ||
-            txt.includes('The Stranger') ||
-            txt.includes('The Vast') ||
-            txt.includes('The Web')
-          ) {
-            li.style.display = 'none';
-          } else {
-            li.style.display = '';
-            li.classList.remove('unreadable');
-          }
-        });
-        if (mrPitchImg) mrPitchImg.classList.add('hidden-mr-pitch');
-        overlay.style.display = 'none';
-      }
-    }
-    // Allow Enter key to submit password
-    document.getElementById('passwordInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') checkPassword();
-    });
     // Flicker effect for haunted state
     const haunted = document.getElementById('hauntedBox');
     haunted.addEventListener('mouseenter', () => haunted.classList.add('flicker'));
