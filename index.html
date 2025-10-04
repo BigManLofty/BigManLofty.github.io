@@ -134,6 +134,27 @@
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       display: block;
     }
+    /* split the Amaryllis link word: first half gold, second half silver */
+    .amaryllis-glow .split-left {
+      display: inline-block;
+      /* metallic gold */
+      background: linear-gradient(90deg, #fff2cc 0%, #ffd67a 40%, #d4af37 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 6px 22px rgba(212,175,55,0.22), 0 2px 8px rgba(0,0,0,0.25);
+      -webkit-text-stroke: 0.2px rgba(0,0,0,0.08);
+    }
+    .amaryllis-glow .split-right {
+      display: inline-block;
+      /* metallic silver */
+      background: linear-gradient(90deg, #f2f6f9 0%, #d6dbe0 50%, #bfc6cc 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      margin-left: 0px;
+    }
     @keyframes amaryllis-glow {
       0% { text-shadow: 0 0 16px #fff, 0 0 32px #baffc9, 0 2px 8px #fff; }
       100% { text-shadow: 0 0 32px #fff, 0 0 48px #baffc9, 0 2px 16px #fff; }
@@ -222,7 +243,7 @@
     </div>
     <div class="links">
       <a href="kirk.html" class="kirk-glitch">Kirk</a>
-      <a href="Amaryllis.html" class="amaryllis-glow">Amaryllis</a>
+  <a href="Amaryllis.html" class="amaryllis-glow"><span class="split-left">Amary</span><span class="split-right">llis</span></a>
       <a href="emris.html" class="emris-sales">Emris</a>
       <a href="valencia.html" class="valencia-shimmer">Valencia</a>
       <a href="lyra.html">Lyra</a>
