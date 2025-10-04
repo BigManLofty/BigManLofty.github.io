@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Watcher — Bestiary</title>
+  <style>
+    :root{ --bg:#0f1724; --card:#0b1220; --muted:#9aa7b2; --accent:#f6c863; --white:#eef6ff }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#071020 0%, #0f1724 100%);color:var(--white)}
+    .wrap{max-width:960px;margin:28px auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    h1{margin:0;font-size:28px;color:var(--accent);letter-spacing:0.6px}
+    nav a{color:var(--muted);text-decoration:none;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.01)}
+    .lead{color:var(--muted);margin:12px 0 24px}
+
+    /* statblock card */
+    .stat { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04); box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+    .stat .meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .meta .type{color:var(--muted);font-weight:600}
+    .attrs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .attr{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:8px;font-weight:600}
+    .section { margin-top:14px; color:var(--muted);line-height:1.45 }
+    .traits{margin-top:14px}
+    details{margin-top:10px;background:transparent;border-radius:8px}
+    summary{list-style:none;cursor:pointer;padding:10px;border-radius:8px;color:var(--accent);font-weight:700}
+    .monster-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+    @media (max-width:720px){.monster-grid{grid-template-columns:1fr}}
+    .monster { background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03); }
+    code{background:rgba(255,255,255,0.02);padding:2px 6px;border-radius:6px;color:var(--accent)}
+    .controls{display:flex;gap:8px;align-items:center}
+    button{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--white);padding:8px 10px;border-radius:8px;cursor:pointer}
+    footer{color:var(--muted);margin-top:28px;text-align:center;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Forms of Fear</h1>
+      <nav>
+        <a href="index.html">Back to index</a>
+      </nav>
+    </header>
+
+    <p class="lead">A compact bestiary of fearful forms. Expand any entry to read traits and actions.</p>
+
+    <p class="lead">A compact bestiary of fearful forms. Expand any entry to read traits and actions. The Watcher entry appears near the Web form below.</p>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px">
+      <div class="controls">
+        <button id="openAll">Open all</button>
+        <button id="closeAll">Close all</button>
+      </div>
+      <div style="color:var(--muted);font-size:13px">Reference creatures below for alternate forms and sample abilities.</div>
+    </div>
+
+    <div class="monster-grid">
+      <!-- We'll place each provided creature as a details block for quick reading -->
+
+      <details class="monster"><summary>The Buried</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — Armor Class: <strong>16 + PB</strong> (natural armor). Speed 20 ft., burrow 20 ft. (6th Level). Hit Points: (DL * 3).</p>
+          <p class="section">STR 16 (+3) • DEX 8 (-1) • CON 18 (+4) • INT — • WIS — • CHA —</p>
+          <p class="section"><strong>Senses</strong>: Tremorsense 30 ft. (60 ft. at DL 10+), passive Perception 10.</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Suffocating Grip.</strong> While grappling a creature, use a bonus action to deal 1d4 bludgeoning damage (scales with DL).</li>
+            <li><strong>Earth's Respite (DL 6+).</strong> As an action, burrow into loose earth/stone; while buried you're restrained and gain resistance to nonmagical damage. Emerge as a bonus action; can hold breath indefinitely.</li>
+            <li><strong>Unmoving Form (DL 10+).</strong> Advantage on saves vs being moved or grappled; if grappled, reaction to make one melee attack against grappler.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Crushing Embrace.</strong> Melee Weapon Attack: PB + STR to hit, reach 5 ft., one target. Hit: 1d8 + PB bludgeoning (2d8 + PB at DL 10+). On hit, you may attempt to grapple the target as part of the same action.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Corruption</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 12 + PB. Hit Points: (DL * 1.5). Speed 20 ft.</p>
+          <p class="section">STR 14 (+2) • DEX 14 (+2) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <p class="section"><strong>Senses</strong>: Darkvision 60 ft., passive Perception 10.</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Swarm Form.</strong> Move through creature spaces; advantage on saves vs grapple/restrain.</li>
+            <li><strong>Aura of Decay (DL 6+).</strong> Hostile creatures within 5 ft. take 1d4 necrotic (scales with DL).</li>
+            <li><strong>Festering Wound (DL 10+).</strong> On Pestilential Touch hit, use reaction to infect with minor disease (ongoing necrotic until cured).</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Pestilential Touch.</strong> Melee Spell Attack: PB + WIS to hit, reach 5 ft. Hit: necrotic or poison 1d6 + PB (2d6 + PB at DL 6+). Target must make Con save (DC 8 + PB + WIS) or be poisoned until end of next turn.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Dark</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 14 + PB. Hit Points: equal to Druid level. Speed 30 ft.</p>
+          <p class="section">STR 10 (+0) • DEX 18 (+4) • CON 14 (+2) • INT — • WIS — • CHA —</p>
+          <p class="section"><strong>Senses</strong>: Blindsight 60 ft. in darkness; Superior Darkvision 120 ft. in dim light/darkness; passive Perception 12.</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Umbral Movement.</strong> Move through spaces as if difficult terrain without extra movement in dim/dark.</li>
+            <li><strong>Blinding Mist (DL 6+).</strong> Bonus action: create 10-ft radius magical darkness centered on you until start of your next turn.</li>
+            <li><strong>Aura of Despair (DL 10+).</strong> Hostile creatures in dim/dark within 10 ft. have disadvantage on Perception checks and fear saves.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Shadow Strike.</strong> Melee Spell Attack: PB + WIS to hit, reach 5 ft. Hit: necrotic 1d6 + PB (2d6 + PB at DL 6+). In dim light/darkness, you have advantage on this attack.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Desolation</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 15 + PB. Hit Points: (DL * 2). Speed 30 ft.</p>
+          <p class="section">STR 18 (+4) • DEX 12 (+1) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Ignited Fury.</strong> Reaction after taking damage: next attack before end of next turn deals +1d6 fire (uses PB per wildshape).</li>
+            <li><strong>Devastating Impact (DL 6+).</strong> Rending Blow deals +1d6 if you moved 10 ft. before hit; can destroy small nonmagical objects.</li>
+            <li><strong>Cinders of Loss (DL 10+).</strong> On reducing a creature to 0 HP, hostiles within 20 ft. must save or be frightened until end of their next turn.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Rending Blow.</strong> Melee Weapon Attack: PB + STR to hit. Hit: 1d6 + PB slashing or bludgeoning (scales). Deals double damage to objects/structures.</p>
+        </div></details>
+
+      <details class="monster"><summary>The End</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 14 + PB. Hit Points: (DL * 6) + Con mod. Speed 30 ft., fly 30 ft. (hover).</p>
+          <p class="section">STR 10 (+0) • DEX 14 (+2) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Deathly Aura.</strong> Hostiles starting their turn within 10 ft. can't regain hit points until end of that turn.</li>
+            <li><strong>Lingering Dread (DL 6+).</strong> On Draining Touch hit, target's speed reduced; if a creature dies within 30 ft., you regain HP equal to PB.</li>
+            <li><strong>Unavoidable Demise (DL 10+).</strong> Once per long rest, instead of 0 HP you can drop to 1 HP; advantage on death saves.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Draining Touch.</strong> Melee Spell Attack: PB + WIS to hit. Hit: necrotic 1d6 + PB (scales with DL). You regain HP equal to half the necrotic damage dealt.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Flesh</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 15 + PB. Hit Points: (DL * 3). Speed 20 ft.</p>
+          <p class="section">STR 16 (+3) • DEX 10 (+0) • CON 20 (+5) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Aberrant Biology.</strong> Gain resistance to one nonmagical damage type of your choice. You may change it each turn.</li>
+            <li><strong>Regenerative Tissue (DL 6+).</strong> Regain 1d4 HP at start of turn if you have at least 1 HP (increases with DL).</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Visceral Lash.</strong> Melee Weapon Attack: PB + STR to hit, reach 15 ft. Hit: 1d6 + PB (scales) bludgeoning or piercing.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Hunt</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 14 + PB. Hit Points: (DL). Speed 40 ft.</p>
+          <p class="section">STR 16 (+3) • DEX 18 (+4) • CON 14 (+2) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Prowler's Pace.</strong> Speed +10 ft. when moving toward a creature you damaged this turn.</li>
+            <li><strong>Relentless Pursuit (DL 6+).</strong> Opportunity attacks against you are at disadvantage; use bonus action to Dash.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Predator's Maw/Claw.</strong> Melee Weapon Attack: PB + STR to hit. Hit: 2d6 + PB piercing/slashing.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Lonely</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 13 + PB. Hit Points: (DL * 1.5). Speed 30 ft.</p>
+          <p class="section">STR 8 (-1) • DEX 12 (+1) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Eerie Silence.</strong> Cast <em>silence</em> centered on yourself as a bonus action once per Wild Shape.</li>
+            <li><strong>Isolation Field (DL 6+).</strong> As a bonus action, hostile creatures within 10 ft. have disadvantage on saves vs frightened/charmed.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Sapping Touch.</strong> Melee Spell Attack: PB + WIS to hit. Hit: Psychic 2d6 + PB. Target has disadvantage on Perception checks until end of next turn.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Slaughter</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 14 + PB. Hit Points: (DL * 1.5). Speed 30 ft.</p>
+          <p class="section">STR 18 (+4) • DEX 14 (+2) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Unsettling Presence.</strong> Creatures starting their turn within 10 ft. have disadvantage on their first attack roll that turn.</li>
+            <li><strong>Unpredictable Movement (DL 6+).</strong> As a bonus action, teleport up to 15 ft.; uses PB per Wild Shape.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Rampage.</strong> Melee Weapon Attack: PB + STR to hit. Hit: 1d6 + PB (scales). On critical, knock prone (and extra effects at higher DL).</p>
+        </div></details>
+
+      <details class="monster"><summary>The Spiral</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 13 + PB. Hit Points: (DL). Speed 30 ft.</p>
+          <p class="section">STR 10 (+0) • DEX 12 (+1) • CON 14 (+2) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Distorted Reality.</strong> Hostile creatures within 10 ft. have disadvantage on saves vs charmed/frightened.</li>
+            <li><strong>Illusory Shift (DL 6+).</strong> As a bonus action, create an illusion; attacks against you have disadvantage until the start of your next turn.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Maddening Whisper.</strong> Ranged Spell Attack: PB + WIS to hit. Hit: Psychic 1d6 + PB. Target may suffer disadvantage on next save.</p>
+        </div></details>
+
+      <details class="monster"><summary>The Stranger</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 14 + PB. Hit Points: (DL * 1.5). Speed 30 ft.</p>
+          <p class="section">STR 15 (+2) • DEX 15 (+2) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Mimicry of Flaws.</strong> As a bonus action, mimic a creature you can see for the day; others must succeed on Insight vs your Deception to tell.</li>
+            <li><strong>Uncanny Resilience (DL 6+).</strong> Reaction to reduce nonmagical damage by 2 * PB.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Unsettling Strike.</strong> Melee Weapon Attack: PB + STR to hit. Hit: 1d6 + PB (scales).</p>
+        </div></details>
+
+      <details class="monster"><summary>The Vast</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 13 + PB. Hit Points: (DL). Speed 30 ft., fly 60 ft. (hover).</p>
+          <p class="section">STR 10 (+0) • DEX 18 (+4) • CON 14 (+2) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Weightless Form.</strong> Ignore difficult terrain from inclines; advantage on Acrobatics to avoid falling.</li>
+            <li><strong>Echoes of Emptiness (DL 6+).</strong> Emit unsettling void; hostiles within 15 ft. who hear you must save or have disadvantage on next attack.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Crushing Void.</strong> Ranged Spell Attack: PB + WIS to hit, range 60 ft. Hit: 2d6 + PB force; may push target 10 ft. on failed save.</p>
+        </div></details>
+
+      <details class="monster" open id="watcher"><summary>The Watcher</summary>
+        <div class="stat">
+          <div class="meta">
+            <div class="type">Tiny / Small beast — Unaligned</div>
+            <div class="type">Armor Class: <strong>13 + PB</strong> (natural armor)</div>
+            <div class="type">Speed: <strong>30 ft.</strong> climb 30 ft. (4th Level)</div>
+          </div>
+
+          <div class="section">Temporary Hit Points: (Druid level)</div>
+
+          <div class="attrs" aria-hidden="false">
+            <div class="attr">STR 6 (-2)</div>
+            <div class="attr">DEX 18 (+4)</div>
+            <div class="attr">CON 14 (+2)</div>
+            <div class="attr">INT — (Inherited)</div>
+            <div class="attr">WIS — (Inherited)</div>
+            <div class="attr">CHA — (Inherited)</div>
+          </div>
+
+          <div class="section">
+            <strong>Senses</strong>: Blindsight 30 ft. (60 ft. at Druid level 10+), Superior Darkvision 120 ft., passive Perception 11 + PB<br>
+            <strong>Languages</strong>: Primordial
+          </div>
+
+          <div class="traits">
+            <h3 style="margin:8px 0 6px;color:var(--accent)">Traits</h3>
+            <ul style="color:var(--muted);margin:0;padding-left:18px;line-height:1.6">
+              <li><strong>Unseen Presence.</strong> While in dim light or darkness, you have advantage on perception checks.</li>
+              <li><strong>Forced Confession (DL 6+).</strong> As a bonus action, choose one creature you can see within 30 feet. They must make an Intelligence saving throw equal to your spell save DC. On a failure, they are under the effects of <em>suggestion</em> for 1 minute. Usable once per wildshape.</li>
+              <li><strong>Paranoid Insight (DL 10+).</strong> You know if any creature within 60 feet is invisible or hidden. As a bonus action, make a perception check contested by their Deception. On success, learn resistances, immunities and AC.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h3 style="margin:10px 0 6px;color:var(--accent)">Actions</h3>
+            <p style="color:var(--muted);margin:0"> <strong>Gaze of Unease.</strong> Ranged Spell Attack: PB + WIS to hit, range 30 ft., one target. Hit: Psychic damage equal to 1d6 + PB (2d6 + PB at DL 6+). On a hit, the target has disadvantage on its next attack roll before the end of its next turn.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="monster"><summary>The Web</summary>
+        <div class="monster-content">
+          <p class="section"><strong>Medium beast, unaligned</strong> — AC 14 + PB. Hit Points: (DL * 1.5). Speed 30 ft., climb 30 ft.</p>
+          <p class="section">STR 12 (+1) • DEX 16 (+3) • CON 16 (+3) • INT — • WIS — • CHA —</p>
+          <h4 style="color:var(--accent)">Traits</h4>
+          <ul style="color:var(--muted)">
+            <li><strong>Web Walker.</strong> Ignore movement restrictions from webbing; can climb upside down without checks.</li>
+            <li><strong>Sticky Venom (DL 6+).</strong> When restrained by your web, attackers take 1d4 poison; you can create a 10-ft cube of sticky webbing as an action.</li>
+          </ul>
+          <h4 style="color:var(--accent)">Actions</h4>
+          <p class="section"><strong>Entangling Filament.</strong> Ranged Spell Attack: PB + WIS to hit, range 30 ft. Hit: 1d6 + PB piercing; target must make Strength save or be restrained until end of next turn.</p>
+        </div></details>
+
+    </div>
+
+    <footer>
+      Built for quick reference. You can copy/paste these blocks into your campaign notes or request alternate formatting (print sheet, A5 card, or JSON statblock).
+    </footer>
+  </div>
+
+  <script>
+    // open/close all details
+    document.getElementById('openAll').addEventListener('click', function(){ document.querySelectorAll('details').forEach(d=>d.open=true); });
+    document.getElementById('closeAll').addEventListener('click', function(){ document.querySelectorAll('details').forEach(d=>d.open=false); });
+  </script>
+</body>
+</html>

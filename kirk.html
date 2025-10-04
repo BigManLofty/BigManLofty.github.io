@@ -169,6 +169,20 @@
       transition: color 0.2s;
     }
     .back-link:hover { color: #d7263d; }
+    .forms-link {
+      display: none;
+      margin-top: 12px;
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,215,0,0.12);
+      border-radius: 8px;
+      background: rgba(255,215,0,0.02);
+      transition: background 0.18s, color 0.18s;
+      display: inline-block;
+    }
+    .forms-link:hover { background: rgba(255,215,0,0.06); color: #fff; }
     /* Glitch effect for timeline */
     .timeline-event.glitch {
       position: relative;
@@ -336,6 +350,9 @@
         <li><b>The Vast</b> – Fear of emptiness, the abyss.</li>
         <li><b>The Web</b> – Entrapment, puppetry, being controlled.</li>
       </ul>
+      <div style="text-align:center;">
+        <a href="watcher.html" id="formsLink" class="forms-link">Forms of Fear</a>
+      </div>
     </div>
     <div class="personality">
       <div class="section-title">Personality Core</div>
@@ -381,6 +398,9 @@
       if (input === '1111') {
         overlay.style.display = 'none';
         if (mrPitchImg) mrPitchImg.classList.remove('hidden-mr-pitch');
+        // reveal the hidden Forms of Fear link
+        const formsLink = document.getElementById('formsLink');
+        if (formsLink) formsLink.style.display = 'inline-block';
       } else {
         error.textContent = 'Incorrect password. Some secrets remain hidden...';
         // Blur Merchant and Orphanage Headmaster timeline events
@@ -409,6 +429,9 @@
           }
         });
         if (mrPitchImg) mrPitchImg.classList.add('hidden-mr-pitch');
+        // ensure forms link stays hidden on incorrect
+        const formsLink = document.getElementById('formsLink');
+        if (formsLink) formsLink.style.display = 'none';
         overlay.style.display = 'none';
       }
     }

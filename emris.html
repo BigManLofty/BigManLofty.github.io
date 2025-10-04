@@ -6,16 +6,92 @@
   <title>Emris</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f4f7fa; text-align: center; }
-    .container { margin: 60px auto; max-width: 500px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 32px; }
+    .container { margin: 60px auto; max-width: 700px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 32px; }
     a { color: #0af; text-decoration: none; font-weight: bold; }
     a:hover { text-decoration: underline; }
+
+  /* Portrait + contract image styling */
+  .portrait-figure { margin: 8px auto 20px; max-width: 360px; }
+  .portrait-photo { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 6px 22px rgba(0,0,0,0.12); cursor: zoom-in; transition: transform 160ms ease, box-shadow 160ms ease; }
+  .portrait-caption { font-size: 13px; color: #556; margin-top: 8px; }
+
+  .contract-figure { margin: 20px auto; max-width: 640px; }
+  .contract-photo { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.12); cursor: zoom-in; transition: transform 200ms ease, box-shadow 200ms ease; }
+  .contract-caption { font-size: 13px; color: #556; margin-top: 8px; }
+
+  /* Simple click-to-enlarge overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 9999; }
+  .overlay.active { display: flex; }
+  .overlay img { max-width: 92vw; max-height: 92vh; border-radius: 6px; box-shadow: 0 12px 48px rgba(0,0,0,0.5); }
+  .overlay .close-btn { position: absolute; top: 18px; right: 18px; color: #fff; font-size: 20px; background: transparent; border: none; cursor: pointer; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Emris</h1>
     <p>This is the Emris page.</p>
+
+    <figure class="portrait-figure">
+      <img src="Assets/Emris1.png" alt="Emris portrait" class="portrait-photo zoomable" tabindex="0" data-caption="Emris portrait. Click to enlarge.">
+      <figcaption class="portrait-caption">Emris — portrait</figcaption>
+    </figure>
+
+    <figure class="contract-figure">
+      <img src="Assets/Contract.jpeg" alt="Signed contract document" class="contract-photo zoomable" tabindex="0" data-caption="A contract associated with Emris. Click to enlarge.">
+      <figcaption class="contract-caption">A contract associated with Emris.</figcaption>
+    </figure>
+
     <a href="index.html">Back to Home</a>
   </div>
+
+  <!-- overlay used for click-to-enlarge -->
+  <div class="overlay" id="imgOverlay" aria-hidden="true">
+    <button class="close-btn" id="overlayClose" aria-label="Close">✕</button>
+    <img src="" alt="" id="overlayImg">
+    <div id="overlayCaption" style="position:absolute;bottom:26px;color:#fff;font-size:14px;left:50%;transform:translateX(-50%);max-width:88vw;text-align:center;opacity:0.95"></div>
+  </div>
+
+  <script>
+    // Click-to-enlarge behavior for any image marked .zoomable. Accessible via keyboard.
+    (function(){
+      var overlay = document.getElementById('imgOverlay');
+      var overlayImg = document.getElementById('overlayImg');
+      var overlayCaption = document.getElementById('overlayCaption');
+      var closeBtn = document.getElementById('overlayClose');
+      var lastFocused = null;
+
+      function openOverlay(src, alt, caption, triggeringEl) {
+        lastFocused = triggeringEl || document.activeElement;
+        overlayImg.src = src;
+        overlayImg.alt = alt || '';
+        overlayCaption.textContent = caption || '';
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        closeBtn.focus();
+      }
+
+      function closeOverlay() {
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        overlayImg.src = '';
+        overlayImg.alt = '';
+        overlayCaption.textContent = '';
+        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      }
+
+      document.querySelectorAll('.zoomable').forEach(function(img){
+        img.addEventListener('click', function(){
+          var src = img.getAttribute('data-large-src') || img.src;
+          var caption = img.getAttribute('data-caption') || img.getAttribute('alt') || '';
+          openOverlay(src, img.alt || '', caption, img);
+        });
+        img.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); img.click(); } });
+      });
+
+      closeBtn.addEventListener('click', closeOverlay);
+      overlay.addEventListener('click', function(e){ if(e.target === overlay) closeOverlay(); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeOverlay(); });
+    })();
+  </script>
 </body>
 </html>
