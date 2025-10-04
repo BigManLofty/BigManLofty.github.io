@@ -305,7 +305,12 @@
     const prophecy = document.getElementById('prophecyBox');
     prophecy.addEventListener('mouseenter', () => prophecy.classList.add('flicker'));
     prophecy.addEventListener('mouseleave', () => prophecy.classList.remove('flicker'));
-    // Show BurningCity only when hovering Counterspell image and change theme
+
+    // Ensure any existing dancing flame elements are removed on load
+    document.querySelectorAll('.dancing-flame').forEach(f => f.remove());
+
+    // Show BurningCity and apply fiery theme on hover/focus of Counterspell.
+    // Stop creating any new dancing-flame elements — we only keep the visual theme and the burning city image.
     const counterspell = document.querySelector('.counterspell-img');
     const burningCity = document.querySelector('.burningcity-img');
     const body = document.body;
@@ -313,28 +318,23 @@
       counterspell.addEventListener('mouseenter', () => {
         burningCity.style.opacity = '1';
         body.classList.add('fiery-blue-theme');
-        // Spawn lots of flames
-        for (let i = 0; i < 18; i++) {
-          const flame = document.createElement('img');
-          flame.src = './Assets/flame1.png';
-          flame.className = 'dancing-flame';
-          flame.style.left = Math.random() * (window.innerWidth - 60) + 'px';
-          flame.style.top = (window.innerHeight * 0.2 + Math.random() * window.innerHeight * 0.7) + 'px';
-          flame.style.animationDelay = (Math.random() * 1.2) + 's';
-          flame.style.transform += ` scale(${0.8 + Math.random() * 0.6})`;
-          document.body.appendChild(flame);
-        }
+        // Remove any stray flame elements if present
+        document.querySelectorAll('.dancing-flame').forEach(f => f.remove());
       });
+
       counterspell.addEventListener('mouseleave', () => {
         burningCity.style.opacity = '0';
         body.classList.remove('fiery-blue-theme');
-        // Remove all flames
+        // Keep flames removed
         document.querySelectorAll('.dancing-flame').forEach(f => f.remove());
       });
+
       counterspell.addEventListener('focus', () => {
         burningCity.style.opacity = '1';
         body.classList.add('fiery-blue-theme');
+        document.querySelectorAll('.dancing-flame').forEach(f => f.remove());
       });
+
       counterspell.addEventListener('blur', () => {
         burningCity.style.opacity = '0';
         body.classList.remove('fiery-blue-theme');
