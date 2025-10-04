@@ -206,6 +206,30 @@
     }
     .dark-theme a.home{ color: var(--accent); }
     .dark-theme .pill{ background: linear-gradient(90deg, rgba(191,198,204,0.04), rgba(191,198,204,0.02)); color: var(--text); border-color: rgba(255,255,255,0.02); }
+  /* starfield visible in dark/night theme */
+  .starfield{
+    position:fixed; inset:0; pointer-events:none; z-index:0; mix-blend-mode:screen;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.95) 0.9px, transparent 1.6px),
+      radial-gradient(rgba(255,255,255,0.9) 0.6px, transparent 1.2px),
+      radial-gradient(rgba(255,255,255,0.85) 0.5px, transparent 1px);
+    background-size: 1200px 1200px, 800px 800px, 400px 400px;
+    background-position: 120px 40px, 420px 240px, 40px 520px;
+    opacity: 0; transform: translateZ(0) scale(1);
+    transition: opacity 420ms ease, filter 420ms ease, transform 420ms ease;
+    filter: drop-shadow(0 0 1px rgba(255,255,255,0.04));
+  }
+  .dark-theme .starfield{ opacity: 0.45; }
+  /* intensify stars while hovering/focusing the black mask */
+  .dark-theme.night-stars-hover .starfield{ opacity: 1; transform: scale(1.02); filter: drop-shadow(0 0 6px rgba(255,255,255,0.18)) saturate(1.1); }
+  /* expanded starfield when the black mask is actively expanded */
+  .dark-theme.night-stars-expanded .starfield{
+    opacity: 1;
+    background-size: 600px 600px, 360px 360px, 180px 180px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.26)) saturate(1.2) blur(0.2px);
+    transform: scale(1.04);
+  }
+  @media (max-width:640px){ .starfield{ opacity:0.18 !important } }
   /* hide selected quotes when dark theme is active */
   .dark-theme .hide-on-dark { display: none !important; }
   /* hide selected quotes when golden theme is active */
@@ -247,6 +271,10 @@
 
   <img src="Assets/WhiteMask.jpeg" alt="White Mask" class="mask-left" onerror="this.style.display='none'">
   <img src="Assets/BlackMask.jpeg" alt="Black Mask" class="mask-right" onerror="this.style.display='none'">
+  <!-- Starfield (controlled by dark/night theme and mask interactions) -->
+  <div class="starfield" id="starfield"></div>
+  <!-- Canvas for actual stars (drawn when night mode is active) -->
+  <canvas id="starsCanvas" class="stars-canvas" aria-hidden="true"></canvas>
 
   <div>
     <h1 class="split-title"><span class="split-left">Amary</span><span class="split-right">llis</span> Alward</h1>
@@ -437,6 +465,39 @@
       left.addEventListener('click', ()=> toggle('left'));
       right.addEventListener('click', ()=> toggle('right'));
 
+        // Starfield interactions: when dark theme is active and user hovers/focuses the black mask, intensify stars
+        const starfield = document.getElementById('starfield');
+        function setStarHover(on){
+          if(!document.body.classList.contains('dark-theme')) return;
+          if(on) {
+            document.body.classList.add('night-stars-hover');
+            if(window._AmaryllisStars) window._AmaryllisStars.setMode('hover');
+          } else {
+            document.body.classList.remove('night-stars-hover');
+            if(window._AmaryllisStars) window._AmaryllisStars.setMode('normal');
+          }
+        }
+        // Hover/focus events on right mask
+        right.addEventListener('mouseenter', ()=> setStarHover(true));
+        right.addEventListener('mouseleave', ()=> setStarHover(false));
+        right.addEventListener('focus', ()=> setStarHover(true));
+        right.addEventListener('blur', ()=> setStarHover(false));
+        // Also toggle when mask is expanded via keyboard/click (when setState('right') runs)
+        const originalSetState = setState;
+        window.setState = function(side){
+          originalSetState(side);
+          if(side === 'right'){
+            // intensify stars and mark expanded
+            setStarHover(true);
+            document.body.classList.add('night-stars-expanded');
+            if(window._AmaryllisStars) window._AmaryllisStars.setMode('expanded');
+          } else {
+            setStarHover(false);
+            document.body.classList.remove('night-stars-expanded');
+            if(window._AmaryllisStars) window._AmaryllisStars.setMode('normal');
+          }
+        };
+
       // Keyboard accessibility: Enter or Space to toggle
       [left, right].forEach((el, idx) => {
         el.setAttribute('tabindex', '0');
@@ -456,6 +517,116 @@
       });
       // initial theme: balanced (masks equal)
       setState(null);
+    })();
+  </script>
+  <script>
+    // Canvas-based starfield: draws twinkling stars and increases density when expanded
+    (function(){
+      const canvas = document.getElementById('starsCanvas');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      let width = 0, height = 0;
+      let animId = null;
+      let mode = 'normal'; // normal | hover | expanded
+
+      function resize(){
+        const dpr = window.devicePixelRatio || 1;
+        width = canvas.clientWidth = window.innerWidth;
+        height = canvas.clientHeight = window.innerHeight;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function rand(min, max){ return Math.random() * (max - min) + min; }
+
+      function makeStars(count){
+        stars = new Array(count).fill(0).map(()=>({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          baseR: rand(0.3, 1.6),
+          r: 0,
+          twinkleSpeed: rand(0.002, 0.02),
+          phase: Math.random() * Math.PI * 2,
+          hue: rand(200, 60), // subtle color variation
+        }));
+      }
+
+      function draw(now){
+        ctx.clearRect(0,0,width,height);
+        // backdrop faint glow
+        if(document.body.classList.contains('dark-theme')){
+          // draw each star
+          for(let i=0;i<stars.length;i++){
+            const s = stars[i];
+            // twinkle calculation
+            s.phase += s.twinkleSpeed * (mode === 'expanded' ? 2.2 : (mode === 'hover' ? 1.6 : 1));
+            const flick = 0.5 + 0.5 * Math.sin(s.phase);
+            const radius = s.baseR * (mode === 'expanded' ? 1.6 : (mode === 'hover' ? 1.15 : 1)) * (0.6 + flick*0.9);
+            const alpha = (0.25 + flick*0.75) * (mode === 'normal' ? 0.55 : (mode === 'hover' ? 0.95 : 1));
+            ctx.beginPath();
+            // subtle halo
+            const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, Math.max(6, radius*6));
+            g.addColorStop(0, `rgba(255,255,255,${Math.min(1, alpha)})`);
+            g.addColorStop(0.6, `rgba(255,255,255,${Math.max(0, alpha*0.12)})`);
+            g.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = g;
+            ctx.fillRect(s.x - radius*6, s.y - radius*6, radius*12, radius*12);
+            // core
+            ctx.beginPath();
+            ctx.fillStyle = `rgba(255,255,255,${Math.min(1, alpha+0.15)})`;
+            ctx.arc(s.x, s.y, radius, 0, Math.PI*2);
+            ctx.fill();
+          }
+        }
+        animId = requestAnimationFrame(draw);
+      }
+
+      function setMode(newMode){
+        mode = newMode || 'normal';
+        // pick star count by mode
+        const counts = { normal: Math.round((width*height)/9000), hover: Math.round((width*height)/4200), expanded: Math.round((width*height)/2400) };
+        const target = counts[mode] || counts.normal;
+        makeStars(Math.max(40, Math.min(600, target)));
+      }
+
+      // start/stop based on dark-theme presence to avoid drawing when not needed
+      function startIfDark(){
+        if(document.body.classList.contains('dark-theme')){
+          resize();
+          setMode(mode);
+          if(!animId) animId = requestAnimationFrame(draw);
+        } else {
+          // clear and stop
+          if(animId) cancelAnimationFrame(animId); animId = null;
+          ctx.clearRect(0,0,width,height);
+        }
+      }
+
+      // init
+      function init(){
+        // size canvas to window
+        canvas.style.position = 'fixed';
+        canvas.style.inset = '0';
+        canvas.style.zIndex = '0';
+        canvas.style.pointerEvents = 'none';
+        window.addEventListener('resize', ()=>{ resize(); setMode(mode); });
+        // watch theme changes by mutation observer on body class
+        const mo = new MutationObserver(startIfDark);
+        mo.observe(document.body, { attributes:true, attributeFilter:['class'] });
+        // initial
+        resize();
+        setTimeout(startIfDark, 60);
+      }
+
+      init();
+
+      // expose controls for other scripts
+      window._AmaryllisStars = {
+        setMode: (m)=>{ setMode(m); startIfDark(); },
+        refresh: ()=>{ resize(); setMode(mode); }
+      };
     })();
   </script>
 </body>
