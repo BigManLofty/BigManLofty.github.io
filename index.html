@@ -120,22 +120,9 @@
       border-color: #ffd700;
     }
     /* amaryllis-glow removed per request */
-    .hi-link {
-      display: block;
-      margin: 18px 0;
-      font-size: 1.22em;
-      color: #9ae6ff;
-      text-decoration: none;
-      font-weight: 700;
-      border-radius: 8px;
-      padding: 13px 0;
-      background: linear-gradient(90deg, #0f1724 0%, #213547 100%);
-      border: 2px solid rgba(154,230,255,0.14);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
-      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-    }
-    .hi-link:hover { background: linear-gradient(90deg,#1b3a4b 0%, #0f1724 100%); color:#fff; box-shadow:0 6px 24px rgba(0,0,0,0.6) }
+    /* Amaryllis link simplified: using the default .links a styling */
     .emris-sales {
+      /* keep teal/crimson accents but remove yellow glow */
       color: #ffd700;
       font-weight: bold;
       letter-spacing: 2px;
@@ -144,8 +131,8 @@
       font-size: 1.22em;
       background: linear-gradient(90deg, #ffd700 0%, #00bfae 100%);
       border: 2px solid #00bfae;
-      box-shadow: 0 2px 18px #ffd70088, 0 0 8px #00bfae44;
-      text-shadow: 0 0 8px #ffd700, 0 2px 12px #00bfae, 0 0 2px #fff3e0;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.35), 0 0 8px #00bfae44; /* removed yellow shadow */
+      text-shadow: 0 2px 12px #d7263d; /* remove yellow halo */
       display: block;
       position: relative;
       overflow: hidden;
@@ -154,17 +141,17 @@
     }
     @keyframes emris-sparkle {
       0% { filter: brightness(1) drop-shadow(0 0 0 #fff); }
-      10% { filter: brightness(1.1) drop-shadow(0 0 6px #ffd700); }
-      20% { filter: brightness(1.2) drop-shadow(0 0 12px #00bfae); }
-      30% { filter: brightness(1.1) drop-shadow(0 0 6px #ffd700); }
+      10% { filter: brightness(1.05) drop-shadow(0 0 6px #00bfae); }
+      20% { filter: brightness(1.08) drop-shadow(0 0 10px #00bfae); }
+      30% { filter: brightness(1.05) drop-shadow(0 0 6px #00bfae); }
       40% { filter: brightness(1) drop-shadow(0 0 0 #fff); }
       100% { filter: brightness(1) drop-shadow(0 0 0 #fff); }
     }
     .emris-sales:hover {
       color: #fff3e0;
       background: linear-gradient(90deg, #00bfae 0%, #ffd700 100%);
-      box-shadow: 0 4px 24px #ffd70088, 0 0 12px #00bfae88;
-      border-color: #ffd700;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.38), 0 0 12px #00bfae88; /* avoid yellow glow */
+      border-color: #00bfae; /* avoid setting border to yellow on hover */
     }
     /* Fire effect for Emris */
     .emris-fire { position: relative; overflow: visible; }
@@ -250,7 +237,7 @@
     </div>
     <div class="links">
       <a href="kirk.html" class="kirk-glitch">Kirk</a>
-    <a href="hi.html" class="hi-link">Amaryllis</a>
+  <a href="hi.html">Amaryllis</a>
       <a href="emris.html" class="emris-sales emris-fire" id="emrisBtn">
         <span class="fire-text">Emris</span>
         <span class="flames" aria-hidden="true"><i></i><i></i><i></i></span>
