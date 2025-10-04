@@ -37,13 +37,72 @@
     <header>
       <h1>Forms of Fear</h1>
       <nav>
-        <a href="index.html">Back to index</a>
+        <a href="kirk.html?noauth=1">Back to Kirk</a>
       </nav>
     </header>
 
     <p class="lead">A compact bestiary of fearful forms. Expand any entry to read traits and actions.</p>
 
-    <p class="lead">A compact bestiary of fearful forms. Expand any entry to read traits and actions. The Watcher entry appears near the Web form below.</p>
+  <!-- Circle of the Maddening Deep subsections (moved from kirk.html) -->
+  <div class="maddening-section" style="margin-top:8px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,215,0,0.04);background:linear-gradient(180deg,rgba(0,0,0,0.02),transparent);">
+      <h3 style="color:var(--accent);margin:0 0 8px;font-family:'UnifrakturCook',serif;">Circle of the Maddening Deep</h3>
+      <p style="color:var(--muted);margin:0 0 10px;font-style:italic;">“Fear is older than the gods, deeper than the roots of the world, and written into the marrow of every living thing. Those of the Maddening Deep do not flee from fear—they become it.”</p>
+
+      <div class="maddening-levels" style="margin-top:8px;color:var(--white)">
+        <details open style="margin-bottom:8px">
+          <summary style="color:var(--accent);font-weight:700;cursor:pointer">Level 2 — Aspect of Dread</summary>
+          <div style="margin-top:8px;color:#cfe">You learn to channel ancient fear as part of your Wild Shape.
+            <p style="margin:8px 0 0 0;color:#cfe">Dreadform Wildshape. When you use Wild Shape, you may assume one of the Fear Forms from the Gyrmm’s Guide to Maddening Forms instead of a beast. These forms reflect ancient fears (such as The Buried, The Dark, The End, etc.). You gain additional forms as you gain levels, as detailed in your Fear Forms document.</p>
+          </div>
+        </details>
+
+        <details style="margin-bottom:8px">
+          <summary style="color:var(--accent);font-weight:700;cursor:pointer">Level 6 — Dream-Eaten Memory</summary>
+          <div style="margin-top:8px;color:#cfe">
+            <p><strong>Echo of Terror (1/rest).</strong> As an action, choose one creature you can see within 60 feet. They must succeed on a Wisdom saving throw (DC = 8 + PB + Wisdom) or be haunted by one of your Fear Forms for 1 minute. While haunted:</p>
+            <ul style="color:#cfe;margin-top:6px">
+              <li>They have disadvantage on saving throws against being frightened.</li>
+              <li>Once per turn, when they take damage, they must make a Wisdom saving throw or take 1d8 psychic damage.</li>
+              <li>The creature can repeat the save at the end of each of its turns.</li>
+            </ul>
+            <p style="margin-top:8px;color:#cfe"><strong>Mark of Fear.</strong> While in a Fear Form, your strikes are considered magical for the purpose of overcoming resistance and immunity. If a creature is frightened of you, your attacks against it deal additional psychic damage equal to your Wisdom modifier (once per turn).</p>
+          </div>
+        </details>
+
+        <details style="margin-bottom:8px">
+          <summary style="color:var(--accent);font-weight:700;cursor:pointer">Level 10 — Mantle of Dread</summary>
+          <div style="margin-top:8px;color:#cfe">
+            <p><strong>Frighten the Heart.</strong> When you assume a Fear Form, you may immediately force all creatures of your choice within 30 feet to make a Wisdom saving throw or become frightened for 1 minute (save ends each round). You may use this feature once per short or long rest.</p>
+          </div>
+        </details>
+
+        <details style="margin-bottom:6px">
+          <summary style="color:var(--accent);font-weight:700;cursor:pointer">Level 14 — Avatar of Fear</summary>
+          <div style="margin-top:8px;color:#cfe">
+            <p><strong>Terror Made Flesh.</strong> You can maintain your Fear Form for an indefinite duration and can cast druid spells while transformed, ignoring verbal and somatic components.</p>
+            <p style="margin-top:6px;color:#cfe"><strong>Form of True Horror (1/day).</strong> As a bonus action, you assume a Nightmare Form for 1 minute. While in this form:
+              <ul style="color:#cfe;margin-top:6px">
+                <li>Your size becomes Large, and your AC equals your Druid level + your Wisdom modifier.</li>
+                <li>You gain resistance to nonmagical bludgeoning, piercing, and slashing damage.</li>
+                <li>Creatures frightened by you have their speed halved.</li>
+                <li>You can cast druid spells while in this form, ignoring verbal and somatic components.</li>
+              </ul>
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <div class="maddening-spells" style="margin-top:10px;color:var(--muted)">
+        <strong>Druid Spells of Fear (these do not count against prepared spells):</strong>
+        <table style="width:100%;margin-top:8px;border-collapse:collapse;color:var(--muted);font-size:0.95em">
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:6px 8px;width:120px"><strong>Druid Level</strong></td><td style="padding:6px 8px"><strong>Spells</strong></td></tr>
+          <tr><td style="padding:6px 8px">3rd</td><td style="padding:6px 8px">Cause Fear, Dissonant Whispers</td></tr>
+          <tr><td style="padding:6px 8px">5th</td><td style="padding:6px 8px">Fear, Enemies Abound</td></tr>
+          <tr><td style="padding:6px 8px">7th</td><td style="padding:6px 8px">Phantasmal Killer, Greater Invisibility</td></tr>
+          <tr><td style="padding:6px 8px">9th</td><td style="padding:6px 8px">Dominate Person, Mislead</td></tr>
+        </table>
+      </div>
+    </div>
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px">
       <div class="controls">

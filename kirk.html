@@ -389,6 +389,22 @@
     <a class="back-link" href="index.html">&#8592; Back to Home</a>
   </div>
   <script>
+    // Bypass password overlay when ?noauth=1 is present in the URL
+    (function(){
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('noauth') === '1') {
+          const overlay = document.getElementById('passwordOverlay');
+          if (overlay) overlay.style.display = 'none';
+          const formsLink = document.getElementById('formsLink');
+          if (formsLink) formsLink.style.display = 'inline-block';
+          const mrPitchImg = document.getElementById('mrPitchImg');
+          if (mrPitchImg) mrPitchImg.classList.remove('hidden-mr-pitch');
+        }
+      } catch (e) {
+        // silent fail
+      }
+    })();
     // Password protection logic
     function checkPassword() {
       const input = document.getElementById('passwordInput').value;
